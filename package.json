@@ -1,0 +1,24 @@
+{
+  "name": "component-ify",
+  "version": "1.0.0",
+  "private": true,
+  "author": "jghlt",
+  "description": "An opinionated component based workflow for building Shopify themes.",
+  "keywords": [
+    "shopify"
+  ],
+  "bugs": "https://github.com/jghlt/component-ify",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jghlt/component-ify.git"
+  },
+  "scripts": {
+    "componentify": "./bin/componentify.js"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.1",
+    "glob": "^7.1.6",
+    "lodash": "^4.17.20"
+  }
+}
