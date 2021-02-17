@@ -19,10 +19,10 @@ You can add scaffold to the project by placing the `bin/scaffold.js` script at t
 
 ```
 "scripts": {
-	"start": "slate-tools start",
-	"watch": "slate-tools start --skipFirstDeploy",
-	"build": "slate-tools build",
-	"scaffold": "./bin/scaffold.js"
+  "start": "slate-tools start",
+  "watch": "slate-tools start --skipFirstDeploy",
+  "build": "slate-tools build",
+  "scaffold": "./bin/scaffold.js"
 }
 ```
 
@@ -33,10 +33,10 @@ npm run scaffold hero
 
 will generate:
 /src/components/hero
-	hero.liquid
-	hero.scss
-	readme.md
-	index.js
+  hero.liquid
+  hero.scss
+  readme.md
+  index.js
 
 ```
 
@@ -47,15 +47,15 @@ npm run scaffold hero js
 
 will generate:
 /src/components/hero
-	hero.liquid
-	hero.scss
-	hero.js
-	readme.md
-	index.js
+  hero.liquid
+  hero.scss
+  hero.js
+  readme.md
+  index.js
 ```
 
 ## CopyLiquidFilesPlugin.js
-CopyLiquidFilesPlugin.js is a simple webpack plugin that will copy all `[component].liquid` files to from the components directory to the snippets directory for use in shopify. Files will be copied when webpack is started and then watched for changes when they will be copied again. Once copied to the snippets directory, Slate will then take over and upload them as if they were an normal snippet.
+`CopyLiquidFilesPlugin.js` is a simple webpack plugin that will copy all `[component].liquid` files to from the components directory to the snippets directory for use in shopify. Files will be copied when webpack is started and then watched for changes when they will be copied again. Once copied to the snippets directory, Slate will then take over and upload them as if they were an normal snippet.
 
 You can add `CopyLiquidFilesPlugin.js` to the project by placing the `webpack/CopyLiquidFilesPlugin.js` script at the root of the project and then require and use like any webpack plugin. The plugin expects three options:
 
@@ -63,40 +63,38 @@ You can add `CopyLiquidFilesPlugin.js` to the project by placing the `webpack/Co
 // slate.config.js
 const CopyLiquidFilesPlugin = require('./webpack/CopyLiquidFilesPlugin');
 
-const custom = {
-  plugins: [
-    new CopyLiquidFilesPlugin({
-      src: './src/components/**/*.liquid',
-      dest: './src/snippets/',
-      build: (process.env.NODE_ENV === 'production')
-    })
-  ]
-};
-
 module.exports = {
-  'webpack.extend': config => {
-    return custom
-  }
+  'webpack.extend': {
+    plugins: [
+      new CopyLiquidFilesPlugin({
+        src: './src/components/**/*.liquid',
+        dest: './src/snippets/',
+        build: (process.env.NODE_ENV === 'production')
+      })
+    ]
+  },
 };
 ```
-
 ## Workflow
+Component-ify is designed to be used in conjunction with [slate](https://github.com/Shopify/slate), if you are unfamiliar with Slate and its workflow/concepts please read those [docs](https://github.com/Shopify/slate) first.
 
 ## Notes
 - It's probably best practice to move all snippets to component directories so the "compiled" snippets can be added to the gitignore and you don't have to commit 2 versions of the same file
 ```
 // .gitignore
-...
+
+# Component-ify #
+######################
 src/snippets/*.liquid
 ```
 
 - To use Sass features (mixins, etc) in component scss files, you'll need to add the `sass-resources-loader` plugin to your dev dependencies, set up a resources file that includes all the files you want to include, and configure Webpack to use the plugin with the specified resources file
 
 ```
+// package.json
+
 "devDependencies": {
-    ...
     "sass-resources-loader": "^2.0.1"
-    ...
   },
 ```
 ```
@@ -109,29 +107,26 @@ src/snippets/*.liquid
 ```
 // slate.config.js
 
-const customWebpackConfig = {
-  ...
-
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: 'sass-resources-loader',
-            options: {
-              resources: path.resolve(__dirname, 'src/styles/sass-resources.scss')
+module.exports = {
+  'webpack.extend': {
+    module: {
+      rules: [
+        {
+          test: /\.scss$/,
+          use: [
+            {
+              loader: 'sass-resources-loader',
+              options: {
+                resources: path.resolve(__dirname, 'src/styles/sass-resources.scss')
+              }
             }
-          }
-        ]
-      }
-    ]
+          ]
+        }
+      ]
+    }
   },
-
-  ...
-}
+};
 ```
-
 
 ## License
 

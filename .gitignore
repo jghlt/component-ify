@@ -68,4 +68,4 @@ secrets.json
 
 # Component-ify #
 ######################
-/src/snippets/*
+src/snippets/*.liquid
