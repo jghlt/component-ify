@@ -2,7 +2,7 @@ import View from 'app/view';
 import 'components/promo-banner';
 import Hero from 'components/hero';
 
-class Theme extends View {
+class Theme extends ComponentifyView {
   constructor() {
     super();
     this.dom = {

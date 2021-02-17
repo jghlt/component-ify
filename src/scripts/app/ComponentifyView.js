@@ -1,4 +1,4 @@
-export default class View {
+export default class ComponentifyView {
   constructor() {
     this.state = {
       components: {},

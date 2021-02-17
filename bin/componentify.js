@@ -79,7 +79,7 @@ const componentify = (args) => {
       fs.writeFileSync(`${paths.components}/${name}/${name}.liquid`, template(name, js));
       fs.writeFileSync(`${paths.components}/${name}/_${name}.scss`, styleTemplate(name));
       fs.writeFileSync(`${paths.components}/${name}/index.js`, indexTemplate(name, js));
-      // fs.writeFileSync(`${paths.components}/${name}/readme.md`, readmeTemplate(name));
+      fs.writeFileSync(`${paths.components}/${name}/readme.md`, readmeTemplate(name));
 
       if (js) {
         fs.writeFileSync(`${paths.components}/${name}/${name}.js`, jsTemplate(name));
